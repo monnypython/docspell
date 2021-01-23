@@ -17,6 +17,7 @@ object Dependencies {
   val FlexmarkVersion         = "0.62.2"
   val FlywayVersion           = "7.7.3"
   val Fs2Version              = "2.5.4"
+  val GatlingVersion          = "3.5.0"
   val H2Version               = "1.4.200"
   val Http4sVersion           = "0.21.22"
   val Icu4jVersion            = "69.1"
@@ -57,6 +58,11 @@ object Dependencies {
 
   val scalaJavaTime =
     Def.setting("io.github.cquiroz" %%% "scala-java-time" % ScalaJavaTimeVersion)
+
+  val gatling = Seq(
+    "io.gatling.highcharts" % "gatling-charts-highcharts" % GatlingVersion,
+    "io.gatling"            % "gatling-test-framework"    % GatlingVersion
+  )
 
   val kittens = Seq(
     "org.typelevel" %% "kittens" % KittensVersion
