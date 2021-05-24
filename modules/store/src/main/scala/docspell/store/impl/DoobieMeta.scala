@@ -12,6 +12,7 @@ import doobie.implicits.legacy.instant._
 import doobie.util.log.Success
 import emil.doobie.EmilDoobieMeta
 import io.circe.{Decoder, Encoder}
+import io.circe.Json
 
 trait DoobieMeta extends EmilDoobieMeta {
 
@@ -112,10 +113,18 @@ trait DoobieMeta extends EmilDoobieMeta {
 
   implicit val metaOrgUse: Meta[OrgUse] =
     Meta[String].timap(OrgUse.unsafeFromString)(_.name)
+
+  implicit val metaJsonString: Meta[Json] =
+    Meta[String].timap(DoobieMeta.parseJsonUnsafe)(_.noSpaces)
 }
 
 object DoobieMeta extends DoobieMeta {
   import org.log4s._
   private val logger = getLogger
+
+  private def parseJsonUnsafe(str: String): Json =
+    io.circe.parser
+      .parse(str)
+      .fold(throw _, identity)
 
 }
